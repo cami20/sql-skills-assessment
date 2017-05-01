@@ -270,3 +270,27 @@ The correct result set is:
 
 
 SELECT brands.brand_id FROM brands JOIN models ON models.brand_id = brands.brand_id GROUP BY brands.brand_id HAVING COUNT(models.brand_id) > 5;
+
+
+==========
+14
+
+-----
+
+Using a subquery, select the name and year of any model whose
+year is the same year that ANY brand was founded.
+
+The result set should be:
+
+   name    | year
+-----------+------
+ Imperial  | 1926
+ Corvette  | 1953
+ Corvette  | 1954
+ Fleetwood | 1954
+(4 rows)
+
+-----
+
+
+SELECT models.name, models.year FROM models JOIN brands ON models.brand_id = brands.brand_id WHERE models.year IN (SELECT brands.founded FROM brands);
